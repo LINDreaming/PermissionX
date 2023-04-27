@@ -35,7 +35,10 @@ android {
 }
 
 dependencies {
-    implementation project(':Library')
+     implementation project(':Library')
+     implementation 'com.github.sweetying520:AndroidUtils:1.0.7'
+    implementation 'com.github.LINDreaming:PermissionX:1.0.0'
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
