@@ -1,5 +1,8 @@
 package com.permissionx.app
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +12,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.Toast
 import com.permissionx.app.databinding.ActivityMainBinding
+import com.permissionx.library.PermissionX
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +37,27 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+        }
+        val makeCallBtn = findViewById<Button>(R.id.makeCallBtn)
+        makeCallBtn.setOnClickListener { view ->
+            PermissionX.request(this, Manifest.permission.CALL_PHONE) { allGranted, deniedList ->
+                if (allGranted) {
+                    call()
+                }else {
+                    Toast.makeText(this, "You denied ${deniedList}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
+    private fun call() {
+        try {
+            val intent = Intent(Intent.ACTION_CALL)
+            intent.data = Uri.parse("tel:10086")
+            startActivity(intent)
+        }catch (e: SecurityException) {
+            e.printStackTrace()
         }
     }
 
